@@ -5,13 +5,26 @@ import ds.graph.exceptions.VertexDoesNotExist;
 
 import java.util.*;
 
+/**
+ * The business graph class, BusinessGraph, should store the vertices in
+ * an ArrayList<Business>, called vertices.
+ */
 public class BusinessGraph {
     private ArrayList<Business> vertices;
 
+    /**
+     * Default constructor
+     */
     public BusinessGraph() {
         vertices = new ArrayList<>();
     }
 
+    /**
+     * Add a Business in the graph
+     *
+     * @param bus Business
+     * @throws VertexAlreadyExist if the Business already in the graph
+     */
     public void addVertex(Business bus) throws VertexAlreadyExist {
         if (vertices.contains(bus)) {
             throw new VertexAlreadyExist("Vertex Already Exist");
@@ -19,6 +32,12 @@ public class BusinessGraph {
         vertices.add(bus);
     }
 
+    /**
+     * Remove a Business in the graph
+     *
+     * @param bus Business
+     * @throws VertexDoesNotExist if the Business not in the graph
+     */
     public void removeVertex(Business bus) throws VertexDoesNotExist {
         if (!vertices.contains(bus)) {
             throw new VertexDoesNotExist("Vertex Does Not Exist");
@@ -29,6 +48,13 @@ public class BusinessGraph {
         vertices.remove(bus);
     }
 
+    /**
+     * This method find the total number of Persons infected
+     *
+     * @param start starting business
+     * @return total number of persons infected
+     * @throws VertexDoesNotExist if the starting business not in the graph
+     */
     public int totalPersonsInfected(Business start) throws VertexDoesNotExist {
         if (!vertices.contains(start)) {
             throw new VertexDoesNotExist("Vertex Does Not Exist");
@@ -55,6 +81,15 @@ public class BusinessGraph {
         return visited.size();
     }
 
+    /**
+     * This method find the minimum number of steps required for an infection to reach the
+     * destination Business, from the Starting Business.
+     *
+     * @param start current Business
+     * @param dest  destination Business
+     * @return minimum number of steps require
+     * @throws VertexDoesNotExist if given vertex does not exist
+     */
     public int minStepsToDestFromStart(Business start, Business dest) throws VertexDoesNotExist {
         int count = Integer.MAX_VALUE;
         if (vertices.contains(start) && vertices.contains(dest)) {
@@ -90,6 +125,13 @@ public class BusinessGraph {
         }
     }
 
+    /**
+     * This method determine if the graph node is strongly connected or not
+     *
+     * @param start node
+     * @return true if strongly connected otherwise false
+     * @throws VertexDoesNotExist if given vertex does not exist
+     */
     public boolean isStronglyConnected(Business start) throws VertexDoesNotExist {
         if (!vertices.contains(start)) {
             throw new VertexDoesNotExist("Vertex Does Not Exist");
