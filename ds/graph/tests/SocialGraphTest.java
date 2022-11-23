@@ -2,6 +2,7 @@ package ds.graph.tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import ds.graph.exceptions.PersonDoesNotExist;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -99,8 +100,13 @@ class SocialGraphTest {
         sg.addEdge(c8, c1);
     }
 
+    /**
+     * searchBFSTest1: Check searchBFS method work the way it should work.
+     * For the undirected graph which is initiated in setUp, I run searchBFS for a1 to b2 and get the path.
+     * Then compare it with the actual path, here I get the actual path using pen and paper which is [A2, B1, B2].
+     */
     @Test
-    void searchBFSTest() throws Exception {
+    void searchBFSTest1() throws Exception {
         ArrayList<Person> list = sg.searchBFS(a1, b2);
         ArrayList<String> path = new ArrayList<>();
         for (Person person : list) {
@@ -109,8 +115,28 @@ class SocialGraphTest {
         assertEquals(path.toString(), "[A2, B1, B2]");
     }
 
+    /**
+     * searchBFSTest2: Check searchBFS method throws PersonDoesNotExist when it should be.
+     * For the undirected graph which is initiated in setUp, I run searchBFS for two new person c98 and c99, which doesn't exist in the graph,
+     * for that this method must throw PersonDoesNotExist exception.
+     */
     @Test
-    void searchDFSTest() throws Exception {
+    void searchBFSTest2() {
+        assertThrows(PersonDoesNotExist.class, () -> {
+            Person c98 = new Person("C98", 23, .78f);
+            Person c99 = new Person("C99", 23, .78f);
+            ArrayList<Person> list = sg.searchBFS(c98, c99);
+        });
+    }
+
+
+    /**
+     * searchDFSTest1: Check searchDFS method work the way it should work.
+     * For the undirected graph which is initiated in setUp, I run searchDFS for a1 to c8 and get the path.
+     * Then compare it with the actual path, here I get the actual path using pen and paper which is [A2, B1, B2, B3, C10, C8].
+     */
+    @Test
+    void searchDFSTest1() throws Exception {
         ArrayList<Person> list = sg.searchDFS(a1, c8);
         ArrayList<String> path = new ArrayList<>();
         for (Person person : list) {
@@ -119,8 +145,29 @@ class SocialGraphTest {
         assertEquals(path.toString(), "[A2, B1, B2, B3, C10, C8]");
     }
 
+
+    /**
+     * searchDFSTest2: Check searchDFS method throws PersonDoesNotExist when it should be.
+     * For the undirected graph which is initiated in setUp, I run searchDFS for two new person c98 and c99, which doesn't exist in the graph,
+     * for that this method must throw PersonDoesNotExist exception.
+     */
     @Test
-    void searchWeightedBFSTest() throws Exception {
+    void searchDFSTest2() {
+        assertThrows(PersonDoesNotExist.class, () -> {
+            Person c98 = new Person("C98", 23, .78f);
+            Person c99 = new Person("C99", 23, .78f);
+            ArrayList<Person> list = sg.searchDFS(c98, c99);
+        });
+    }
+
+
+    /**
+     * searchWeightedBFSTest1: Check searchWeightedBFS method work the way it should work.
+     * For the undirected graph which is initiated in setUp, I run searchWeightedBFS for a1 to c8 and get the path.
+     * Then compare it with the actual path, here I get the actual path using pen and paper which is [A2, B1, B2, B3, B4].
+     */
+    @Test
+    void searchWeightedBFSTest1() throws Exception {
         ArrayList<Person> list = sg.searchWeightedBFS(a1, b4);
         ArrayList<String> path = new ArrayList<>();
         for (Person person : list) {
@@ -129,8 +176,28 @@ class SocialGraphTest {
         assertEquals(path.toString(), "[A2, B1, B2, B3, B4]");
     }
 
+    /**
+     * searchWeightedBFSTest2: Check searchWeightedBFS method throws PersonDoesNotExist when it should be.
+     * For the undirected graph which is initiated in setUp, I run searchWeightedBFS for two new person c98 and c99, which doesn't exist in the graph,
+     * for that this method must throw PersonDoesNotExist exception.
+     */
     @Test
-    void searchWeightedDFSTest() throws Exception {
+    void searchWeightedBFSTest2() {
+        assertThrows(PersonDoesNotExist.class, () -> {
+            Person c98 = new Person("C98", 23, .78f);
+            Person c99 = new Person("C99", 23, .78f);
+            ArrayList<Person> list = sg.searchWeightedBFS(c98, c99);
+        });
+    }
+
+
+    /**
+     * searchWeightedDFSTest1: Check searchWeightedDFS method work the way it should work.
+     * For the undirected graph which is initiated in setUp, I run searchWeightedDFS for a1 to c8 and get the path.
+     * Then compare it with the actual path, here I get the actual path using pen and paper which is [C1, C8, C10, B3, B4].
+     */
+    @Test
+    void searchWeightedDFSTest1() throws Exception {
         ArrayList<Person> list = sg.searchWeightedDFS(a1, b4);
         ArrayList<String> path = new ArrayList<>();
         for (Person person : list) {
@@ -139,9 +206,44 @@ class SocialGraphTest {
         assertEquals(path.toString(), "[C1, C8, C10, B3, B4]");
     }
 
+
+    /**
+     * searchWeightedDFSTest2: Check searchWeightedDFS method throws PersonDoesNotExist when it should be.
+     * For the undirected graph which is initiated in setUp, I run searchWeightedDFS for two new person c98 and c99, which doesn't exist in the graph,
+     * for that this method must throw PersonDoesNotExist exception.
+     */
     @Test
-    void countContactsTest() throws Exception {
+    void searchWeightedDFSTest2() {
+        assertThrows(PersonDoesNotExist.class, () -> {
+            Person c98 = new Person("C98", 23, .78f);
+            Person c99 = new Person("C99", 23, .78f);
+            ArrayList<Person> list = sg.searchWeightedDFS(c98, c99);
+        });
+    }
+
+
+    /**
+     * countContactsTest1: Check countContacts method work the way it should work.
+     * For the undirected graph which is initiated in setUp, I run countContacts for a1 and
+     * compare it with the actual path, here I get the actual path using pen and paper which is 7.
+     */
+    @Test
+    void countContactsTest1() throws Exception {
         assertEquals(sg.countContacts(a1), 7);
+    }
+
+
+    /**
+     * countContactsTest2: Check countContacts method throws PersonDoesNotExist when it should be.
+     * For the undirected graph which is initiated in setUp, I run countContacts for new person c99, which doesn't exist in the graph,
+     * for that this method must throw PersonDoesNotExist exception.
+     */
+    @Test
+    void countContactsTest2() {
+        assertThrows(PersonDoesNotExist.class, () -> {
+            Person c99 = new Person("C99", 23, .78f);
+            sg.countContacts(c99);
+        });
     }
 
 }
